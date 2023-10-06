@@ -1,5 +1,16 @@
+import { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
+import { AuthContext } from '../Provider/AuthProvider';
 const Navbar = () => {
+
+    const { user, logOut } = useContext(AuthContext);
+
+    const handleLogOut = () => {
+        logOut()
+        .then()
+        .catch()
+    }
+
     return (
         <div className='flex justify-around items-center'>
             <div>
@@ -12,8 +23,14 @@ const Navbar = () => {
                 <NavLink className="px-4 py-5" to="/contsct">Contact</NavLink>
             </div>
             <div className="flex justify-center items-center gap-4">
-                <NavLink to="/login">Log In</NavLink>
-                <NavLink to="/register">Register</NavLink>
+                {
+                    user ?
+                        <button onClick={handleLogOut} className='btn btn-outline'>Log Out</button>
+                        :
+                        <NavLink to="/login">
+                            <button>Log In</button>
+                        </NavLink>
+                }
             </div>
         </div>
     );
